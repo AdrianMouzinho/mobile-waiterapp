@@ -1,4 +1,6 @@
+import { Categories } from '../components/Categories';
 import { Header } from '../components/Header';
+import { Menu } from '../components/Menu';
 
 import { CategoryContainer, Container, Footer, FooterContainer, MenuContainer } from './styles';
 
@@ -8,9 +10,13 @@ export function Main() {
       <Container>
         <Header />
 
-        <CategoryContainer></CategoryContainer>
+        <CategoryContainer>
+          <Categories />
+        </CategoryContainer>
 
-        <MenuContainer></MenuContainer>
+        <MenuContainer>
+          <Menu />
+        </MenuContainer>
 
       </Container>
 
