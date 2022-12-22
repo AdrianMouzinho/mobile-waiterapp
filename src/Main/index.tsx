@@ -1,26 +1,44 @@
 import { useState } from 'react';
 import { Button } from '../components/Button';
+import { Cart } from '../components/Cart';
 import { Categories } from '../components/Categories';
 import { Header } from '../components/Header';
-import { HeaderTable } from '../components/HeaderTable';
 import { Menu } from '../components/Menu';
 import { TableModal } from '../components/TableModal';
-import { Text } from '../components/Text';
+import { products } from '../mocks/products';
+import { CartItem } from '../types/CartItem';
 
 import { CategoryContainer, Container, Footer, FooterContainer, MenuContainer } from './styles';
 
 export function Main() {
   const [isTableModalVisible, setIsTableModalVisible] = useState(false);
   const [selectedTable, setSelectedTable] = useState('');
+  const [cartItems, setCartItems] = useState<CartItem[]>([
+    {
+      product: products[0],
+      quantity: 2,
+    },
+    {
+      product: products[1],
+      quantity: 1,
+    },
+  ]);
 
   function handleSaveTable(table: string) {
     setSelectedTable(table);
   }
 
+  function handleCancelOrder() {
+    setSelectedTable('');
+  }
+
   return (
     <>
       <Container>
-        {selectedTable ? <HeaderTable /> : <Header />}
+        <Header
+          selectedTable={selectedTable}
+          onCancelOrder={handleCancelOrder}
+        />
 
         <CategoryContainer>
           <Categories />
@@ -39,7 +57,7 @@ export function Main() {
               Novo Pedido
             </Button>
           ) : (
-            <Text>outra coisa</Text>
+            <Cart cartItems={cartItems} />
           )}
         </FooterContainer>
       </Footer>

@@ -1,41 +1,60 @@
+import { useState } from 'react';
 import { FlatList } from 'react-native';
 
 import { products } from '../../mocks/products';
+import { Product } from '../../types/Product';
 import { formatCurrency } from '../../utils/formatCurrency';
 import { PlusCircle } from '../Icons/PlusCircle';
+import { ProductModal } from '../ProductModal';
 import { Text } from '../Text';
 
-import { ProductImage, Product, ProductDetails, Separator, AddToCardButton } from './styles';
+import { ProductImage, ProductContainer, ProductDetails, Separator, AddToCardButton } from './styles';
 
 export function Menu() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+
+  function handleOpenModal(product: Product) {
+    setIsModalVisible(true);
+    setSelectedProduct(product);
+  }
+
   return (
-    <FlatList
-      data={products}
-      style={{ marginTop: 32 }}
-      contentContainerStyle={{ paddingHorizontal: 24 }}
-      keyExtractor={product => product.name}
-      ItemSeparatorComponent={Separator}
-      renderItem={({ item: product }) => (
-        <Product>
-          <ProductImage
-            source={{
-              uri: `http://192.168.16.218:3000/uploads/${product.imagePath}`,
-            }}
-          />
+    <>
+      <ProductModal
+        visible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+        product={selectedProduct}
+      />
 
-          <ProductDetails>
-            <Text weight="600">{product.name}</Text>
-            <Text size={14} color="#666" style={{ marginVertical: 8 }}>
-              {product.description}
-            </Text>
-            <Text size={14} weight="600">{formatCurrency(product.price)}</Text>
-          </ProductDetails>
+      <FlatList
+        data={products}
+        style={{ marginTop: 32 }}
+        contentContainerStyle={{ paddingHorizontal: 24 }}
+        keyExtractor={product => product.name}
+        ItemSeparatorComponent={Separator}
+        renderItem={({ item: product }) => (
+          <ProductContainer onPress={() => handleOpenModal(product)}>
+            <ProductImage
+              source={{
+                uri: `http://192.168.16.218:3000/uploads/${product.imagePath}`,
+              }}
+            />
 
-          <AddToCardButton>
-            <PlusCircle />
-          </AddToCardButton>
-        </Product>
-      )}
-    />
+            <ProductDetails>
+              <Text weight="600">{product.name}</Text>
+              <Text size={14} color="#666" style={{ marginVertical: 8 }}>
+                {product.description}
+              </Text>
+              <Text size={14} weight="600">{formatCurrency(product.price)}</Text>
+            </ProductDetails>
+
+            <AddToCardButton>
+              <PlusCircle />
+            </AddToCardButton>
+          </ProductContainer>
+        )}
+      />
+    </>
   );
 }
