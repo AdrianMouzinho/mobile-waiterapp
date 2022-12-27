@@ -8,15 +8,21 @@ import { Close } from '../Icons/Close';
 import { Text } from '../Text';
 import { CloseButton, Footer, FooterContainer, Header, Image, Ingredient, IngredientsContainer, ModalBody, PriceContainer } from './styles';
 
-interface ProductModal {
+interface ProductModalProps {
   visible: boolean;
   onClose: () => void;
   product: Product | null;
+  onAddToCart: (product: Product) => void;
 }
 
-export function ProductModal({ visible, onClose, product }: ProductModal) {
+export function ProductModal({ visible, onClose, product, onAddToCart }: ProductModalProps) {
   if (!product) {
     return null;
+  }
+
+  function handleOnAddToCart() {
+    onAddToCart(product!);
+    onClose();
   }
 
   return (
@@ -72,7 +78,7 @@ export function ProductModal({ visible, onClose, product }: ProductModal) {
             <Text size={20} weight="600">{formatCurrency(product.price)}</Text>
           </PriceContainer>
 
-          <Button onPress={() => alert('oK')}>Adicionar ao pedido</Button>
+          <Button onPress={handleOnAddToCart}>Adicionar ao pedido</Button>
         </FooterContainer>
       </Footer>
     </Modal>
