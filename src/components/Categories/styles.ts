@@ -3,7 +3,7 @@ import { Platform } from 'react-native';
 
 const isAndroid = Platform.OS === 'android';
 
-export const Category = styled.TouchableOpacity`
+export const CategoryContainer = styled.TouchableOpacity`
   width: 79.25px;
   align-items: center;
   margin-right: 12px;
