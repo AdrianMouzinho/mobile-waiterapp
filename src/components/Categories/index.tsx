@@ -34,12 +34,18 @@ export function Categories({ categories, onSelectCategory }: CategoriesProps) {
         return (
           <CategoryContainer onPress={() => handleSelectCategory(category._id)}>
             <Icon>
-              <Text opacity={isSelected ? 1 : 0.5}>
+              <Text opacity={1}>
                 {category.icon}
               </Text>
             </Icon>
 
-            <Text size={14} weight="600" opacity={isSelected ? 1 : 0.5}>
+            <Text
+              size={14}
+              weight="600"
+              opacity={1}
+              color={isSelected ? '#D73035' : '#333'}
+              style={isSelected && { borderBottomColor: '#D73035', borderBottomWidth: 2 }}
+            >
               {category.name}
             </Text>
           </CategoryContainer>
