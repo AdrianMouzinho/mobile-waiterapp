@@ -35,7 +35,7 @@ export function Menu({ onAddToCart, products }: MenuProps) {
       <FlatList
         data={products}
         style={{ marginTop: 32 }}
-        contentContainerStyle={{ paddingHorizontal: 24 }}
+        contentContainerStyle={{ paddingHorizontal: 24, paddingBottom: 24 }}
         keyExtractor={product => product.name}
         ItemSeparatorComponent={Separator}
         renderItem={({ item: product }) => (
